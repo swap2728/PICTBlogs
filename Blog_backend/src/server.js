@@ -8,7 +8,6 @@ const UserModel = require("./models/user_models")
 
 const mongoose = require("mongoose")
 mongoose.connect("mongodb://127.0.0.1:27017/blog_website");
-
 app.listen(5000,()=> console.log("server started"))
 app.use(body_parser.json())
 app.use(body_parser.urlencoded({extended:false}))

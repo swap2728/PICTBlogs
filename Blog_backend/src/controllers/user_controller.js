@@ -2,16 +2,19 @@
 
 const UserModel = require("../models/user_models")
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken")
 const UserController = {
     createAccount : async (req,res,next)=>{
         try{
-            const {name,email ,reg, password} = req.body;
-            const Model = UserModel({name,email,reg,password});
+            const {name,email ,reg,dept,passout, password} = req.body;
+            const Model = new UserModel({name,email,reg,dept,passout,password});
+            console.log(password);
             await Model.save();
             console.log(Model)
             return res.json({status:true , data:Model})
         }
         catch(e){
+            throw e;
             res.json({status:false})
         }   
     },
@@ -26,17 +29,21 @@ const UserController = {
             //     {new:true}
             // )
             // const foundUser = await UserModel.find();/
-            // console.log(foundUser);
+            console.log(foundUser);
+            
             if(!foundUser){
                 return res.json({status:false , message:"user not found"});
             }
-            const passwordMatch = bcrypt.compare(password,foundUser.password);
-            if(!passwordMatch){
-                res.json({status:false , message:"Password do not match" });
+            // const passwordMatch = bcrypt.compare(password,foundUser.password);
+            if(password!=foundUser.password){
+               return res.json({status:false , message:"Password do not match" });
             }
-            return res.json({status:true, message:foundUser});
+            let token = jwt.sign({foundUser},"secret");
+            // res.;
+            return res.json({status:true, message:token});
             // res.json({status:true , "mess": "for sign in"});
         }catch(e){
+            throw e;
             res.json({status:false});
         }
     },

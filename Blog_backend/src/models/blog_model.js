@@ -6,6 +6,7 @@ const comment = new Schema({
     data : {type:String, default:""}
 })
 
+
 const BlogSchema = new Schema({
     id:{type : Schema.Types.ObjectId , ref:'User', require:true},
     // image:{},
