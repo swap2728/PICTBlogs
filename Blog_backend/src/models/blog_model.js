@@ -9,8 +9,9 @@ const comment = new Schema({
 
 const BlogSchema = new Schema({
     id:{type : Schema.Types.ObjectId , ref:'User', require:true},
-    // image:{},
-    data:{type:String , default:""},
+    title:{type:String , require:true},
+    image:{type:String , default:"https://cdn-icons-png.freepik.com/512/6711/6711830.png"},
+    content:{type:String , default:""},
     likes:{type:Array , default:[]},
     Comment:{type:[comment] , default:[]},
     UpdatedOn: {type:Date},

@@ -5,13 +5,14 @@ const BlogController = {
     // http://localhost:5000/api/blog/makeblog
     Make_Blogs : async (req,res,next)=>{
         try{
-            const {id,data} = req.body;
-            const model = BlogModel({id:id,data:data});
+            const {id,title,image,content} = req.body;
+            const model = BlogModel({id:id});
             console.log(model)
             await model.save();
             res.json({status:"ok",data:model});
         }
         catch(e){
+            // res.json({status:false})
             throw e; 
        }
     },
@@ -62,6 +63,17 @@ const BlogController = {
         catch(e){
             throw e;
         }
+    },
+
+    getbyuserid : async(req, res ,next)=>{
+        try{
+            const userid = req.body;
+            const model = await BlogModel.find({id:userid}).sort({CreatedOn:1})
+            res.json({status:"ok",data:model});
+        }   
+        catch(e){
+            throw e
+        } 
     },
 
     // http://localhost:5000/api/blog/

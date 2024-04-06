@@ -3,7 +3,8 @@ const BlogController = require('../controllers/Blog_controller');
 
 BlogRoute.post('/makelike',BlogController.makeLike);
 BlogRoute.post('/makeblog',BlogController.Make_Blogs);
-BlogRoute.post('/makecomment',BlogController.makeComment)
+BlogRoute.post('/makecomment',BlogController.makeComment);
 BlogRoute.get('/',BlogController.showBlogs);
+BlogRoute.get('/byuserid',BlogController.getbyuserid);
 
 module.exports = BlogRoute
