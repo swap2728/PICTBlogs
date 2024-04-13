@@ -56,8 +56,61 @@ const UserController = {
         catch(e){
             throw e;
         }
-    }
+    },
 
+
+    follower : async(req, res, next)=>{
+        try{
+            try {
+                const { id, userid } = req.body;
+            
+                // Use findOne() instead of find() to get a single document
+                const model = await UserModel.findOne({ _id: id });
+                const model2 = await UserModel.findOne({_id:userid});
+            
+                if (!model || !model2) {
+                    return res.status(404).json({ status: "error", message: "User not found" });
+                }
+            
+                console.log(model.following);
+            
+                let updatedFollowing , updatedFollowing2;
+            
+                if (Array.isArray(model.following)) {
+                    if (model.following.includes(userid)) {
+                        updatedFollowing = model.following.filter(value => value !== userid);
+                        updatedFollowing2 = model2.follower.filter(value=> value!==id);
+                    } else {
+                        updatedFollowing = [...model.following, userid];
+                        updatedFollowing2 = [...model2.follower , id];
+                    }
+                } else {
+                    updatedFollowing = [userid];
+                    updatedFollowing2 = [id]
+                }
+            
+                const updatedFollower = await UserModel.findOneAndUpdate(
+                    { _id: id },
+                    { $set: { following: updatedFollowing } },
+                    { new: true }
+                );
+                const updatedFollower2 = await UserModel.findByIdAndUpdate(
+                    {_id: userid},
+                    {$set : { follower: updatedFollowing2}},
+                    {new :true}
+                )
+            
+                res.json({ status: "ok", data: updatedFollower , data2: updatedFollower2});
+            } catch (error) {
+                console.error("An error occurred:", error);
+                res.status(500).json({ status: "error", message: "Internal server error" });
+            }
+            
+        }
+        catch(e){
+            throw e;
+        }
+    }
 }
 
-module.exports = UserController;
+module.exports = UserController;    

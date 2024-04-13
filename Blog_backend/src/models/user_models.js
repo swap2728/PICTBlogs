@@ -8,6 +8,20 @@ const User = new Schema({
     dept: {type:String,default:""},
     passout: {type:Number,default:""},
     password : {type:String , require:true , default:""},
+    picture: {
+        type: String,
+        trim: true,
+        default:
+          "https://res.cloudinary.com/dmhcnhtng/image/upload/v1643044376/avatars/default_pic_jeaybr.png",
+      },
+      following:{
+        type:Array,
+        default:[],
+      },
+      follower:{
+        type:Array,
+        default:[],
+      },
     updatedOn: {type:Date},
     createdOn:{type :Date}
 });

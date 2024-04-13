@@ -67,12 +67,13 @@ const BlogController = {
 
     getbyuserid : async(req, res ,next)=>{
         try{
-            const userid = req.body;
+            const {userid} = req.body;
+            // console.log(userid)
             const model = await BlogModel.find({id:userid}).sort({CreatedOn:1})
             res.json({status:"ok",data:model});
         }   
         catch(e){
-            throw e
+            throw e;
         } 
     },
 

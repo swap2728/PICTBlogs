@@ -5,6 +5,6 @@ BlogRoute.post('/makelike',BlogController.makeLike);
 BlogRoute.post('/makeblog',BlogController.Make_Blogs);
 BlogRoute.post('/makecomment',BlogController.makeComment);
 BlogRoute.get('/',BlogController.showBlogs);
-BlogRoute.get('/byuserid',BlogController.getbyuserid);
+BlogRoute.post('/byuserid',BlogController.getbyuserid);
 
 module.exports = BlogRoute
